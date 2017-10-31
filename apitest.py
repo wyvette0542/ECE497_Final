@@ -18,7 +18,12 @@ subscription_key = '97ce17233dbb4b9ab1189e344cf63dd4'
 uri_base = 'westcentralus.api.cognitive.microsoft.com'
 
 # Request headers.
-headers = {
+headers_octet = {
+    'Content-Type': 'application/octet-stream',
+    'Ocp-Apim-Subscription-Key': subscription_key,
+}
+
+headers_json = {
     'Content-Type': 'application/json',
     'Ocp-Apim-Subscription-Key': subscription_key,
 }
@@ -31,13 +36,25 @@ params = urllib.urlencode({
 })
 
 # The URL of a JPEG image to analyze.
-body1 = "{'url':'http://hairstyles.thehairstyler.com/hairstyle_views/front_view_images/4603/original/Zach-Quinto.jpg'}"
-body2 = "{'url':'https://d24v5oonnj2ncn.cloudfront.net/wp-content/uploads/2015/06/11095458/Eli-Roth.jpg'}"
+# body1 = "{'url':'http://hairstyles.thehairstyler.com/hairstyle_views/front_view_images/4603/original/Zach-Quinto.jpg'}"
+# body2 = "{'url':'https://d24v5oonnj2ncn.cloudfront.net/wp-content/uploads/2015/06/11095458/Eli-Roth.jpg'}"
+
+body1 = ""
+filename = '/home/debian/ECE497_Final/wcx.jpg'
+f = open(filename, "rb")
+body1 = f.read()
+f.close()
+
+body2 = ""
+filename = '/home/debian/ECE497_Final/wcx1.jpg'
+f = open(filename, "rb")
+body2 = f.read()
+f.close()
 
 try:
     # Execute the REST API call and get the response.
     conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
-    conn.request("POST", "/face/v1.0/detect?%s" % params, body1, headers)
+    conn.request("POST", "/face/v1.0/detect?%s" % params, body1, headers_octet)
     response1 = conn.getresponse()
     data1 = response1.read()
 
@@ -50,7 +67,7 @@ try:
     # conn.close()
     
     # conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
-    conn.request("POST", "/face/v1.0/detect?%s" % params, body2, headers)
+    conn.request("POST", "/face/v1.0/detect?%s" % params, body2, headers_octet)
     response2 = conn.getresponse()
     data2 = response2.read()
 
@@ -66,7 +83,7 @@ try:
     body = "{'faceId1':'"+id1+"','faceId2':'"+id2+"'}"
     print(body)
     
-    conn.request("POST", "/face/v1.0/verify?%s" %params3, body, headers)
+    conn.request("POST", "/face/v1.0/verify?%s" %params3, body, headers_json)
     response = conn.getresponse()
     data = response.read()
 
