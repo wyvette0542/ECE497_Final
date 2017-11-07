@@ -16,6 +16,12 @@ subscription_key = '97ce17233dbb4b9ab1189e344cf63dd4'
 # NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
 # a free trial subscription key, you should not need to change this region.
 uri_base = 'westcentralus.api.cognitive.microsoft.com'
+
+text_file = open("face.dat", "r")
+names = text_file.read().split(',')
+print names
+print len(names)
+
 for i in range (1,5): 
     print("wsb"+ str(i))
 
@@ -48,7 +54,7 @@ for i in range (1,5):
     f.close()
     
     body2 = ""
-    filename = '/home/debian/final/ECE497_Final/wcx1.jpg'
+    filename = '/home/debian/final/1.jpg'
     f = open(filename, "rb")
     body2 = f.read()
     f.close()
@@ -93,16 +99,18 @@ for i in range (1,5):
         parsed = json.loads(data)
         print ("Response:")
         print (json.dumps(parsed, sort_keys=True, indent=2))
-        print(parsed[1]['isIdentical'])
-        # if(parsed[1]['isIdentical'] == 'true'):
-        #     print("WELCOME")
-        #     break
-        # else:
-        conn.close()
+        # print(parsed['isIdentical'])
+        if(parsed['isIdentical'] == True):
+            print("WELCOME "+names[i-1])
+            break
+        else:
+            conn.close()
     
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
     time.sleep(2)
     
+
+text_file.close()    
 # conn.close()
