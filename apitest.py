@@ -48,7 +48,7 @@ for i in range (1,5):
     # body2 = "{'url':'https://d24v5oonnj2ncn.cloudfront.net/wp-content/uploads/2015/06/11095458/Eli-Roth.jpg'}"
     
     body1 = ""
-    filename = '/home/debian/final/ECE497_Final/'+str(i)+'.jpg'
+    filename = '/home/debian/ECE497_Final/'+str(i)+'.jpg'
     f = open(filename, "rb")
     body1 = f.read()
     f.close()
