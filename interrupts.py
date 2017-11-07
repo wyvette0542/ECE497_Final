@@ -13,11 +13,13 @@ GPIO.setup(LED, GPIO.OUT)
 map = {button: LED}
 
 def updateLED(channel):
-	subprocess.call("./grab.sh", shell = True)
+	state = GPIO.input(channel)
+	if state == 1:
+		subprocess.call("./grab.sh", shell = True)
 
 print("Running...")
 
-GPIO.add_event_detect(button, GPIO.BOTH, callback=updateLED)
+GPIO.add_event_detect(button, GPIO.RISING, callback=updateLED)
 
 try:
 	while True:

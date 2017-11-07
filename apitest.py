@@ -17,7 +17,7 @@ subscription_key = '97ce17233dbb4b9ab1189e344cf63dd4'
 # a free trial subscription key, you should not need to change this region.
 uri_base = 'westcentralus.api.cognitive.microsoft.com'
 
-text_file = open("face.dat", "r")
+text_file = open("./database/face.dat", "r")
 names = text_file.read().split(',')
 print names
 print len(names)
@@ -48,13 +48,13 @@ for i in range (1,5):
     # body2 = "{'url':'https://d24v5oonnj2ncn.cloudfront.net/wp-content/uploads/2015/06/11095458/Eli-Roth.jpg'}"
     
     body1 = ""
-    filename = '/home/debian/ECE497_Final/'+str(i)+'.jpg'
+    filename = '/home/debian/ECE497_Final/database/'+str(i)+'.jpg'
     f = open(filename, "rb")
     body1 = f.read()
     f.close()
     
     body2 = ""
-    filename = '/home/debian/final/1.jpg'
+    filename = '/home/debian/ECE497_Final/1.jpg'
     f = open(filename, "rb")
     body2 = f.read()
     f.close()
