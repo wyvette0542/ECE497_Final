@@ -22,7 +22,7 @@ names = text_file.read().split(',')
 print names
 print len(names)
 
-for i in range (1,5): 
+for i in range (1,6): 
     print("wsb"+ str(i))
 
     # Request headers.
