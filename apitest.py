@@ -19,10 +19,11 @@ uri_base = 'eastus.api.cognitive.microsoft.com'
 guestname = "blank"
 text_file = open("./database/face.dat", "r")
 names = text_file.read().split(',')
+uplimit = len(names)+1
 print names
 print len(names)
 
-for i in range (1,6): 
+for i in range (1,uplimit): 
     print("wsb"+ str(i))
 
     # Request headers.
