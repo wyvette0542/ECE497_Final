@@ -19,7 +19,7 @@ def updateLED(channel):
 		takepicture(str(var))
 		appendname(str(var))
 		call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
-		call(["rm", "*.jpg"])
+		call(["./cleanup.sh"])
 		
 def takepicture(name):
 	call("./grabber")
@@ -29,7 +29,6 @@ def takepicture(name):
 	call(["convert", "*.ppm", str(file_count)+".jpg"])
 	call(["convert", str(file_count)+".jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+name+"!\nYour name is added.", 
           "-gravity", "Center", "-append", "anno_label.jpg"])
-	call(["rm", "*.ppm"])
 	call(["mv", str(file_count)+".jpg", "database/"])
 
 def appendname(name):
@@ -38,6 +37,7 @@ def appendname(name):
 
 var = input("Please enter your name here: ")
 print("You entered " + str(var))
+print("Look at the camera then press the button to record your face.")
 
 print("Running...")
 
