@@ -12,6 +12,8 @@ GPIO.setup(LED, GPIO.OUT)
 # map button to led
 map = {button: LED}
 
+subprocess.call("./on.sh")
+
 def updateLED(channel):
 	state = GPIO.input(channel)
 	if state == 0:

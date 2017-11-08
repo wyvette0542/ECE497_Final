@@ -5,17 +5,17 @@ from subprocess import call
 ###############################################
 
 # Replace the subscription_key string value with your valid subscription key.
-subscription_key = '97ce17233dbb4b9ab1189e344cf63dd4'
+subscription_key = '7ffe7a3ee1844bc2aa3211c4f02bbc55'
 
 # Replace or verify the region.
 #
 # You must use the same region in your REST API call as you used to obtain your subscription keys.
 # For example, if you obtained your subscription keys from the westus region, replace 
-# "westcentralus" in the URI below with "westus".
+# "eastus" in the URI below with "westus".
 #
-# NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
+# NOTE: Free trial subscription keys are generated in the eastus region, so if you are using
 # a free trial subscription key, you should not need to change this region.
-uri_base = 'westcentralus.api.cognitive.microsoft.com'
+uri_base = 'eastus.api.cognitive.microsoft.com'
 guestname = "blank"
 text_file = open("./database/face.dat", "r")
 names = text_file.read().split(',')
@@ -61,7 +61,7 @@ for i in range (1,6):
     
     try:
         # Execute the REST API call and get the response.
-        conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
+        conn = httplib.HTTPSConnection('eastus.api.cognitive.microsoft.com')
         conn.request("POST", "/face/v1.0/detect?%s" % params, body1, headers_octet)
         response1 = conn.getresponse()
         data1 = response1.read()
@@ -74,7 +74,7 @@ for i in range (1,6):
         id1 = parsed1[0]['faceId']
         # conn.close()
         
-        # conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
+        # conn = httplib.HTTPSConnection('eastus.api.cognitive.microsoft.com')
         conn.request("POST", "/face/v1.0/detect?%s" % params, body2, headers_octet)
         response2 = conn.getresponse()
         data2 = response2.read()
@@ -110,10 +110,9 @@ for i in range (1,6):
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    time.sleep(0.1)
     
 
 text_file.close()    
-call(["convert", "1.jpg", "-background", "Khaki", "label:Welcome "+guestname+"!", 
+call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+guestname+"!", 
           "-gravity", "Center", "-append", "anno_label.jpg"])
 call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
