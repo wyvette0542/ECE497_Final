@@ -1,5 +1,5 @@
 import httplib, urllib, base64, json, time
-
+from subprocess import call
 ###############################################
 #### Update or verify the following values. ###
 ###############################################
@@ -16,7 +16,7 @@ subscription_key = '97ce17233dbb4b9ab1189e344cf63dd4'
 # NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
 # a free trial subscription key, you should not need to change this region.
 uri_base = 'westcentralus.api.cognitive.microsoft.com'
-
+guestname = "blank"
 text_file = open("./database/face.dat", "r")
 names = text_file.read().split(',')
 print names
@@ -101,6 +101,7 @@ for i in range (1,5):
         print (json.dumps(parsed, sort_keys=True, indent=2))
         # print(parsed['isIdentical'])
         if(parsed['isIdentical'] == True):
+            guestname = names[i-1]
             print("WELCOME "+names[i-1])
             break
         else:
@@ -109,8 +110,10 @@ for i in range (1,5):
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    time.sleep(2)
+    time.sleep(0.1)
     
 
 text_file.close()    
-# conn.close()
+call(["convert", "1.jpg", "-background", "Khaki", "label:Welcome "+guestname+"!", 
+          "-gravity", "Center", "-append", "anno_label.jpg"])
+call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
