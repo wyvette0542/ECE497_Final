@@ -104,9 +104,16 @@ for i in range (1,uplimit):
         if(parsed['isIdentical'] == True):
             guestname = names[i-1]
             print("WELCOME "+names[i-1])
+            call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+guestname+"!", 
+                    "-gravity", "Center", "-append", "anno_label.jpg"])
+            call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
             break
         else:
-            conn.close()
+            if(i == uplimit-1):
+                call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Hmm... Can't recognize you.\nTry again!", 
+                         "-gravity", "Center", "-append", "anno_label.jpg"])
+                call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
+                conn.close()
     
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
@@ -114,6 +121,3 @@ for i in range (1,uplimit):
     
 
 text_file.close()    
-call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+guestname+"!", 
-          "-gravity", "Center", "-append", "anno_label.jpg"])
-call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
