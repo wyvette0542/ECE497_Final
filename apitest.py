@@ -116,7 +116,10 @@ for i in range (1,uplimit):
                 conn.close()
     
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Sorry we can't find your face\nPlease make sure your face is clear \nand try again!", 
+                 "-gravity", "Center", "-append", "anno_label.jpg"])
+        call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
+        break
 
     
 

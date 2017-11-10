@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
+import httplib, urllib, base64, json
 import os
 import Adafruit_BBIO.GPIO as GPIO
 import time
 from subprocess import call
-
 # setup input and output GPIO
 button = "GP1_3"
 button_new = "GP1_4"
@@ -14,13 +14,17 @@ def identify(channel):
 	state = GPIO.input(channel)
 	if state == 0:
 		call("./grab.sh")
-
+		time.sleep(5)
+		call("./welcome.sh")
+		
 def addFace(channel):
 	state = GPIO.input(channel)
 	if state == 0:
 		takePicture()
 		call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
 		call(["./cleanup.sh"])
+		time.sleep(5)
+		call("./welcome.sh")
 		
 def takePicture():
 	call("./grabber")
@@ -37,6 +41,7 @@ def takePicture():
 	with open('database/face.dat', 'a') as f:
 		f.write(','+name)
 
+call("./welcome.sh")
 print("Running...")
 
 GPIO.add_event_detect(button, GPIO.FALLING, callback=identify)
