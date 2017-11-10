@@ -39,6 +39,7 @@ def identify(channel):
 		call("./welcome.sh")
 		
 def addFace(channel):
+	flag = False
 	state = GPIO.input(channel)
 	if state == 0:
 		takePicture()
@@ -64,7 +65,6 @@ def takePicture():
 		conn.request("POST", "/face/v1.0/detect?%s" % params, body1, headers_octet)
 		response1 = conn.getresponse()
 		data1 = response1.read()
-		print("I'm here!")
 		
 		# 'data' contains the JSON data. The following formats the JSON data for display.
 		parsed1 = json.loads(data1)
@@ -78,15 +78,19 @@ def takePicture():
 		         "-gravity", "Center", "-append", "anno_label.jpg"])
 		# call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])
 		# call("./cleanup.sh")
-
-	name = input("Please enter your name here: ")
-	print("You entered " + str(name))
-	call(["convert", str(file_count)+".jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+str(name)+"!\nYour name is added.", 
-          "-gravity", "Center", "-append", "anno_label.jpg"])
-	call(["mv", str(file_count)+".jpg", "database/"])
-	
-	with open('database/face.dat', 'a') as f:
-		f.write(','+name)
+		flag = True
+		
+	if(!flag):	
+		name = input("Please enter your name here: ")
+		print("You entered " + str(name))
+		call(["convert", str(file_count)+".jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+str(name)+"!\nYour name is added.", 
+	          "-gravity", "Center", "-append", "anno_label.jpg"])
+		call(["mv", str(file_count)+".jpg", "database/"])
+		
+		with open('database/face.dat', 'a') as f:
+			f.write(','+name)
+	else:
+		print("Bug fixed! Delete this else statement before push to git.")
 
 call("./welcome.sh")
 print("Running...")
