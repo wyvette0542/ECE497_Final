@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import http.client, urllib, base64, json
+import http.client, urllib.parse, base64, json
 import os
 import Adafruit_BBIO.GPIO as GPIO
 import time
@@ -19,7 +19,7 @@ headers_json = {
 }
 
 # Request parameters.
-params = urllib.urlencode({
+params = urllib.parse.urlencode({
     'returnFaceId': 'true',
     'returnFaceLandmarks': 'false',
     'returnFaceAttributes': '',
