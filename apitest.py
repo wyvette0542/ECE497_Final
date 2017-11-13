@@ -20,11 +20,10 @@ guestname = "blank"
 text_file = open("./database/face.dat", "r")
 names = text_file.read().split(',')
 uplimit = len(names)+1
-print names
-print len(names)
+# print names
+# print len(names)
 
 for i in range (1,uplimit): 
-    print("wsb"+ str(i))
 
     # Request headers.
     headers_octet = {
@@ -69,9 +68,9 @@ for i in range (1,uplimit):
     
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed1 = json.loads(data1)
-        print ("Response:")
+        # print ("Response:")
         # print (json.dumps(parsed, sort_keys=True, indent=2))
-        print(parsed1[0]['faceId'])
+        # print(parsed1[0]['faceId'])
         id1 = parsed1[0]['faceId']
         # conn.close()
         
@@ -82,15 +81,15 @@ for i in range (1,uplimit):
     
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed2 = json.loads(data2)
-        print ("Response:")
+        # print ("Response:")
         # print (json.dumps(parsed, sort_keys=True, indent=2))
-        print(parsed2[0]['faceId'])
+        # print(parsed2[0]['faceId'])
         id2 = parsed2[0]['faceId']
         
         params3 = urllib.urlencode({
         })
         body = "{'faceId1':'"+id1+"','faceId2':'"+id2+"'}"
-        print(body)
+        # print(body)
         
         conn.request("POST", "/face/v1.0/verify?%s" %params3, body, headers_json)
         response = conn.getresponse()
@@ -98,12 +97,12 @@ for i in range (1,uplimit):
     
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed = json.loads(data)
-        print ("Response:")
-        print (json.dumps(parsed, sort_keys=True, indent=2))
+        # print ("Response:")
+        # print (json.dumps(parsed, sort_keys=True, indent=2))
         # print(parsed['isIdentical'])
         if(parsed['isIdentical'] == True):
             guestname = names[i-1]
-            print("WELCOME "+names[i-1])
+            # print("WELCOME "+names[i-1])
             call(["convert", "1.jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+guestname+"!", 
                     "-gravity", "Center", "-append", "anno_label.jpg"])
             call(["sudo", "fbi", "-noverbose", "-T", "1", "-a", "anno_label.jpg"])

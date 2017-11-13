@@ -31,10 +31,13 @@ def takePicture():
 	call("./grabber")
 	files = next(os.walk("/home/debian/ECE497_Final/database"))[2]
 	file_count = len(files)
-	print("I have "+str(file_count))
+	# print("I have "+str(file_count))
 	call(["convert", "*.ppm", str(file_count)+".jpg"])
+	call(["convert", "-background", "Khaki", "-font", "Times-Roman", "-pointsize", "32", "-size", "320x240", "-gravity", "center", 
+	"label:Please type your name \nin the console.", "/tmp/Name.png"])
+	call(["sudo", "fbi", "-noverbose", "-T", "1", "/tmp/Name.png"])
 	name = input("Please enter your name here: ")
-	print("You entered " + str(name))
+	# print("You entered " + str(name))
 	call(["convert", str(file_count)+".jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+str(name)+"!\nYour name is added.", 
           "-gravity", "Center", "-append", "anno_label.jpg"])
 	call(["mv", str(file_count)+".jpg", "database/"])

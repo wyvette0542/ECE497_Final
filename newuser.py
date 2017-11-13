@@ -25,7 +25,6 @@ def takepicture(name):
 	call("./grabber")
 	files = next(os.walk("/home/debian/ECE497_Final/database"))[2]
 	file_count = len(files)
-	print("I have "+str(file_count))
 	call(["convert", "*.ppm", str(file_count)+".jpg"])
 	call(["convert", str(file_count)+".jpg", "-background", "Khaki", "-pointsize", "30", "label:Welcome "+name+"!\nYour name is added.", 
           "-gravity", "Center", "-append", "anno_label.jpg"])
@@ -35,6 +34,7 @@ def appendname(name):
 	with open('database/face.dat', 'a') as f:
 		f.write(','+name)
 
+call(["convert", "-background", "Khaki", "-font", "Times-Roman", "-pointsize", "32", "-size" "320x240", "-gravity", "center", "label:'Press GREEN button to add a new face\nPress red button to verify identity'", "/home/debian/ECE497_Final/Name.jpg"])
 var = input("Please enter your name here: ")
 print("You entered " + str(var))
 print("Look at the camera then press the button to record your face.")
